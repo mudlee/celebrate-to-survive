@@ -50,6 +50,9 @@ func _input(event):
 		fireworks_ready = false
 		emit_signal("fireworks_active")
 
+	if event.is_action_pressed("reload"):
+		get_tree().reload_current_scene()
+
 
 func _process(delta):
 	var elapsed = (OS.get_unix_time() - time_start)%60

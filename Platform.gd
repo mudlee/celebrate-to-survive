@@ -6,7 +6,7 @@ export var color = Color(1,1,1)
 
 onready var tween = $MoveTween
 onready var mesh = $Platform/MeshInstance2D
-onready var speed = randi()%200+50
+var speed = randi()%200+50
 var move_from
 var follow
 var fireworks_active = false
