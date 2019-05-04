@@ -26,6 +26,7 @@ var fireworks_active = false
 var fireworks_last_used = 0
 var fireworks_ready = true
 var time_start = 0
+var time_remaining = GAME_LENGTH
 
 func _ready():
 	time_start = OS.get_unix_time()
@@ -56,8 +57,8 @@ func _input(event):
 
 func _process(delta):
 	var elapsed = (OS.get_unix_time() - time_start)%60
-	var remaining = GAME_LENGTH - elapsed
-	time_left_text.set_text("Time Left: "+str(remaining))
+	time_remaining = GAME_LENGTH - elapsed
+	time_left_text.set_text("Time Left: "+str(time_remaining))
 
 	if fireworks_last_used == 0 or (OS.get_unix_time()-fireworks_last_used)%60 > FIREWORKS_LIMIT:
 		fireworks_ready = true
@@ -68,10 +69,14 @@ func _process(delta):
 		fireworks_active = false
 		emit_signal("fireworks_not_active")
 
+	if position.y > 300 or time_remaining<=0:
+		get_tree().change_scene("res://gameover.tscn")
+
 	
 func _physics_process(delta):
 	handle_movement(delta)
 
+	
 func handle_movement(delta):
 	if input_direction:
 		direction = input_direction

@@ -2,10 +2,12 @@ extends Node2D
 
 export var idle_duration = 1.0
 export var move_to = Vector2.ZERO
-export var color = Color(1,1,1)
 
 onready var tween = $MoveTween
 onready var mesh = $Platform/MeshInstance2D
+
+const COLORS = ["#ed6aac","#4446c8","#704089","#bac3f5"]
+
 var speed = randi()%200+50
 var move_from
 var follow
@@ -14,7 +16,8 @@ var fireworks_active = false
 func _ready():
 	move_from = position
 	follow = position
-	mesh.modulate = color
+	mesh.modulate = Color(COLORS[randi()%4+0])
+	
 	init_tween()
 
 
