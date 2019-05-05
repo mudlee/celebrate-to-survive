@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal fireworks_active
 signal fireworks_not_active
 onready var fireworks = get_node("Fireworks")
+onready var fireworks_sound = get_node("FireworksSound")
 onready var fireworks_shards = get_node("Fireworks/Shards")
 onready var time_left_text = get_parent().get_node("Canvas/TimeLeftText")
 onready var fireworks_text = get_parent().get_node("Canvas/FireworksText")
@@ -12,7 +13,7 @@ const ACCELERATION = 10000.0
 const MAX_SPEED = 6000
 const GRAVITY = 12000.0
 const JUMP_FORCE = 14000.0
-const GAME_LENGTH = 99
+const GAME_LENGTH = 120
 const FIREWORKS_LIMIT = 5
 
 var velocity = Vector2()
@@ -49,6 +50,7 @@ func _input(event):
 		fireworks_text.add_color_override("default_color", Color(1,0,0,1))
 		fireworks_text.set_text("FIREWORKS NOT READY")
 		fireworks_ready = false
+		fireworks_sound.play()
 		emit_signal("fireworks_active")
 
 	if event.is_action_pressed("reload"):
@@ -56,9 +58,12 @@ func _input(event):
 
 
 func _process(delta):
-	var elapsed = (OS.get_unix_time() - time_start)%60
+	var elapsed = OS.get_unix_time() - time_start
 	time_remaining = GAME_LENGTH - elapsed
 	time_left_text.set_text("Time Left: "+str(time_remaining))
+
+	if time_remaining <= 20:
+		time_left_text.add_color_override("default_color", Color(1,0,0,1))
 
 	if fireworks_last_used == 0 or (OS.get_unix_time()-fireworks_last_used)%60 > FIREWORKS_LIMIT:
 		fireworks_ready = true
