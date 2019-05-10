@@ -12,7 +12,6 @@ font_data = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="GameOver" type="RichTextLabel" parent="CanvasLayer"]
 anchor_left = 0.5
@@ -40,8 +39,6 @@ custom_fonts/normal_font = SubResource( 1 )
 custom_colors/default_color = Color( 1, 0, 0, 1 )
 text = "RESTART: F5"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 957.161, 560.731 )
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
-attenuation = 6.7435e-07
